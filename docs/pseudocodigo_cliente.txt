@@ -1,0 +1,116 @@
+FUNÇÃO menuCliente()
+
+    REPITA
+        EXIBIR "=== MENU CLIENTE ==="
+        EXIBIR "1 - Cadastrar Cliente"
+        EXIBIR "2 - Listar Clientes"
+        EXIBIR "3 - Editar Cliente"
+        EXIBIR "4 - Excluir Cliente"
+        EXIBIR "0 - Voltar"
+        LER opcao
+
+        ESCOLHA opcao
+            CASO 1:
+                CHAMAR cadastrarCliente()
+            CASO 2:
+                CHAMAR listarClientes()
+            CASO 3:
+                CHAMAR editarCliente()
+            CASO 4:
+                CHAMAR excluirCliente()
+            CASO 0:
+                RETORNAR
+            CASO CONTRÁRIO:
+                EXIBIR "Opção inválida!"
+        FIMESCOLHA
+    ATÉ opcao = 0
+
+FIMFUNÇÃO
+
+
+FUNÇÃO cadastrarCliente()
+
+    EXIBIR "Digite o nome:"
+    LER nome
+    EXIBIR "Digite o telefone:"
+    LER telefone
+    EXIBIR "Digite o e-mail:"
+    LER email
+
+    SQL = "INSERT INTO cliente (nome, telefone, email) VALUES (nome, telefone, email)"
+
+    SE executarSQL(SQL) for sucesso ENTÃO
+        EXIBIR "Cliente cadastrado com sucesso!"
+    SENÃO
+        EXIBIR "Erro ao cadastrar!"
+    FIMSE
+
+FIMFUNÇÃO
+
+
+FUNÇÃO listarClientes()
+
+    SQL = "SELECT * FROM cliente"
+    RESULTADO = executarSQL(SQL)
+
+    SE RESULTADO tiver linhas ENTÃO
+        PARA cada linha do RESULTADO FAÇA
+            EXIBIR linha.id, linha.nome, linha.telefone, linha.email
+        FIMPARA
+    SENÃO
+        EXIBIR "Nenhum cliente encontrado."
+    FIMSE
+
+FIMFUNÇÃO
+
+
+FUNÇÃO editarCliente()
+
+    EXIBIR "Digite o ID do cliente:"
+    LER id
+
+    SQLbusca = "SELECT * FROM cliente WHERE id = id"
+    REGISTRO = executarSQL(SQLbusca)
+
+    SE REGISTRO não existir ENTÃO
+        EXIBIR "Cliente não encontrado."
+        RETORNAR
+    FIMSE
+
+    EXIBIR "Digite novo nome (ou ENTER para manter):"
+    LER novoNome
+    SE novoNome estiver vazio ENTÃO novoNome = REGISTRO.nome
+
+    EXIBIR "Digite novo telefone:"
+    LER novoTelefone
+    SE estiver vazio ENTÃO novoTelefone = REGISTRO.telefone
+
+    EXIBIR "Digite novo email:"
+    LER novoEmail
+    SE estiver vazio ENTÃO novoEmail = REGISTRO.email
+
+    SQLupdate = "UPDATE cliente SET nome=novoNome, telefone=novoTelefone, email=novoEmail WHERE id=id"
+
+    SE executarSQL(SQLupdate) sucesso ENTÃO
+        EXIBIR "Cliente atualizado!"
+    SENÃO
+        EXIBIR "Erro ao atualizar!"
+    FIMSE
+
+FIMFUNÇÃO
+
+
+FUNÇÃO excluirCliente()
+
+    EXIBIR "Digite o ID do cliente para excluir:"
+    LER id
+
+    SQLdelete = "DELETE FROM cliente WHERE id = id"
+
+    SE executarSQL(SQLdelete) sucesso ENTÃO
+        EXIBIR "Cliente excluído com sucesso!"
+    SENÃO
+        EXIBIR "Erro ao excluir!"
+    FIMSE
+
+FIMFUNÇÃO
