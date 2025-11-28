@@ -101,6 +101,10 @@ Coloque o projeto no diretório htdocs do XAMPP e acesse:
 
 http://localhost/seu_projeto
 
+🔐 Acesso ao Sistema
+
+Para acessar o CRUD, é necessário realizar login na "area do cliente": Usuário: lucasbontempo1@gmail.com, senha: 123456
+
 📚 Documentação Complementar (Exigência da Avaliação A1)
 
 A documentação solicitada pela professora está disponível na pasta /docs, contendo:
